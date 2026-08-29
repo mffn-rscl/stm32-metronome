@@ -1,0 +1,89 @@
+#ifndef DEVICE_DRIVER_SSD1306
+#define DEVICE_DRIVER_SSD1306
+
+
+#include <stdint.h>
+#include "../CMSIS/Device/stm32f103xb.h"
+
+
+#define SSD1306_ADDR 0x3CU
+
+/*SSD1306 Control bytes*/
+#define SSD1306_CONTROL_BYTE_COMMAND_STREAM     0x00U
+#define SSD1306_CONTROL_BYTE_DATA_STREAM        0x40U
+#define SSD1306_CONTROL_BYTE_SINGLE_COMMAND     0x80U
+#define SSD1306_CONTROL_BYTE_SINGLE_DATA        0xC0U
+
+/*SSD1306 Control bytes*/
+
+
+/* Start Software configuration */
+
+#define SSD1306_CONFIGURATION_TURN_DISPLAY_OFF      0xAEU 
+
+#define SSD1306_CONFIGURATION_MUX_RATIO_CMD         0xA8U
+#define SSD1306_CONFIGURATION_MUX_RATIO_ARG         0x3FU
+
+#define SSD1306_CONFIGURATION_DISPLAY_OFFSET_CMD    0xD3U
+#define SSD1306_CONFIGURATION_DISPLAY_OFFSET_ARG    0x00U 
+
+#define SSD1306_CONFIGURATION_MEM_ADDR_MODE_CMD     0x20U
+#define SSD1306_CONFIGURATION_MEM_ADDR_MODE_HORIZ   0x00U
+
+#define SSD1306_CONFIGURATION_SET_START_LINE        0x40U
+
+#define SSD1306_CONFIGURATION_SEGMENT_REMAP         0xA1U
+
+#define SSD1306_CONFIGURATION_SCAN_DIRECTION        0xC8U
+
+#define SSD1306_CONFIGURATION_COM_PINS_CMD          0xDAU
+#define SSD1306_CONFIGURATION_COM_PINS_ARG          0x12U
+
+#define SSD1306_CONFIGURATION_CONTRAST_CMD          0x81U
+#define SSD1306_CONFIGURATION_CONTRAST_ARG          0x7FU
+
+#define SSD1306_CONFIGURATION_ENTIRE_DISPLAY_RAM    0xA4U
+
+#define SSD1306_CONFIGURATION_SET_NORMAL_DISPLAY    0xA6U
+
+#define SSD1306_CONFIGURATION_SET_OSC_FREQ_CMD      0xD5U
+#define SSD1306_CONFIGURATION_SET_OSC_FREQ_ARG      0x80U
+
+#define SSD1306_CONFIGURATION_CHARGE_PUMP_CMD       0x8DU
+#define SSD1306_CONFIGURATION_CHARGE_PUMP_ARG       0x14U
+
+#define SSD1306_CONFIGURATION_TURN_DISPLAY_ON       0xAFU
+/* End of Software configuration */
+
+
+/*Byte Position Register*/
+#define SSD1306_CONFIGURATION_SET_COL_ADDR       0x21U
+#define SSD1306_CONFIGURATION_SET_ROW_ADDR       0x22U
+
+#define SSD1306_CONFIGURATION_MAX_SEGMENT        127U
+#define SSD1306_CONFIGURATION_MIN_SEGMENT        0U
+#define SSD1306_CONFIGURATION_MAX_PAGE           7U
+#define SSD1306_CONFIGURATION_MIN_PAGE           0U
+/* The end of Byte Position Register*/
+
+
+
+
+
+void ssd1306_init(void);
+
+void ssd1306_set_resolution(uint8_t start_x, uint8_t end_x, uint8_t start_y, uint8_t end_y);
+
+void ssd1306_clean(void);
+
+void ssd1306_load_data_stream(uint8_t *data, uint16_t size);
+
+
+/*1 kb size for data frame buffer*/
+#define FRAME_BUFFER_SIZE 1024
+
+extern uint8_t ssd1306_frame_buffer[FRAME_BUFFER_SIZE];
+
+
+#endif /* DEVICE_DRIVER_SSD1306 */
+
