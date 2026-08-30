@@ -1,6 +1,6 @@
 #include "../Inc/ssd1306.h"
 #include "../Inc/i2c_driver.h"
-
+#include "../Inc/dma_driver.h"
 
 
 void ssd1306_init(void)
@@ -68,36 +68,25 @@ void ssd1306_set_resolution(uint8_t start_x, uint8_t end_x, uint8_t start_y, uin
 
 
 
-void ssd1306_load_data_stream(uint8_t *data, uint16_t size)
+
+
+
+void ssd1306_update_display(uint8_t *framebuffer, uint16_t size)
 {
-  ssd1306_set_resolution(SSD1306_CONFIGURATION_MIN_SEGMENT, SSD1306_CONFIGURATION_MAX_SEGMENT, 
-                         SSD1306_CONFIGURATION_MIN_PAGE,SSD1306_CONFIGURATION_MAX_PAGE);
+    ssd1306_set_resolution(
+      SSD1306_CONFIGURATION_MIN_SEGMENT, 
+      SSD1306_CONFIGURATION_MAX_SEGMENT, 
+      SSD1306_CONFIGURATION_MIN_PAGE,
+      SSD1306_CONFIGURATION_MAX_PAGE);
 
-  i2c1_start();
-  i2c1_slave_adress(SSD1306_ADDR);
-  i2c1_data(SSD1306_CONTROL_BYTE_DATA_STREAM);
 
-  for(uint16_t i = 0; i < size; i++)
-  { 
-    i2c1_data(data[i]);
-  }
-  i2c1_stop_condition();
+    i2c1_start();
+    i2c1_slave_adress(SSD1306_ADDR);
+    i2c1_data(SSD1306_CONTROL_BYTE_DATA_STREAM);
+
+    dma_channel6_set_pma(framebuffer, size);
+
+    i2c1_dma_enable();
+    dma_channel6_enable();
+
 }
-
-
-void ssd1306_clean(void)
-{
-  ssd1306_set_resolution(SSD1306_CONFIGURATION_MIN_SEGMENT, SSD1306_CONFIGURATION_MAX_SEGMENT, 
-                         SSD1306_CONFIGURATION_MIN_PAGE,SSD1306_CONFIGURATION_MAX_PAGE);
-  
-  i2c1_start();
-  i2c1_slave_adress(SSD1306_ADDR);
-  i2c1_data(SSD1306_CONTROL_BYTE_DATA_STREAM);
-
-  for(uint16_t i=0; i < FRAME_BUFFER_SIZE; i++)
-  {
-    i2c1_data(0x00);
-  }
-  i2c1_stop_condition();
-}
-

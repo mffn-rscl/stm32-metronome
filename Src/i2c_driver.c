@@ -50,3 +50,9 @@ void i2c1_stop_condition()
   
 }
 
+void i2c1_dma_enable(void)
+{
+  
+  I2C1->CR2 |= I2C_CR2_DMAEN; 
+}
+

@@ -7,7 +7,7 @@
 #define I2C1_APB1_FREQUENCY_DIVIDER 180U
 #define I2C1_TRISE_VAL 37U 
 
-
+void i2c1_dma_enable(void);
 
 void i2c1_init(void);
 

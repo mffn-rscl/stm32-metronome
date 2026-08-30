@@ -74,15 +74,15 @@ void ssd1306_init(void);
 
 void ssd1306_set_resolution(uint8_t start_x, uint8_t end_x, uint8_t start_y, uint8_t end_y);
 
-void ssd1306_clean(void);
 
-void ssd1306_load_data_stream(uint8_t *data, uint16_t size);
+
+void ssd1306_update_display(uint8_t *framebuffer, uint16_t size);
 
 
 /*1 kb size for data frame buffer*/
 #define FRAME_BUFFER_SIZE 1024
 
-extern uint8_t ssd1306_frame_buffer[FRAME_BUFFER_SIZE];
+static uint8_t ssd1306_frame_buffer[FRAME_BUFFER_SIZE];
 
 
 #endif /* DEVICE_DRIVER_SSD1306 */
