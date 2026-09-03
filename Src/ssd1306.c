@@ -66,12 +66,7 @@ void ssd1306_set_resolution(uint8_t start_x, uint8_t end_x, uint8_t start_y, uin
 
 }
 
-
-
-
-
-
-void ssd1306_update_display(uint8_t *framebuffer, uint16_t size)
+void ssd1306_update_display(void)
 {
     ssd1306_set_resolution(
       SSD1306_CONFIGURATION_MIN_SEGMENT, 
@@ -84,9 +79,10 @@ void ssd1306_update_display(uint8_t *framebuffer, uint16_t size)
     i2c1_slave_adress(SSD1306_ADDR);
     i2c1_data(SSD1306_CONTROL_BYTE_DATA_STREAM);
 
-    dma_channel6_set_pma(framebuffer, size);
+    dma_channel6_set_pma((uint8_t*)ssd1306_frame_buffer, FRAME_BUFFER_SIZE);
 
-    i2c1_dma_enable();
     dma_channel6_enable();
-
 }
+
+
+
