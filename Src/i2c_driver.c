@@ -17,6 +17,7 @@ void i2c1_init()
   I2C1->TRISE = I2C1_TRISE_VAL;
   I2C1->CR2 |= I2C_CR2_DMAEN;
 
+  I2C1->CR2 |= I2C_CR2_DMAEN; 
   I2C1->CR1 |= I2C_CR1_PE;
 }
 
@@ -50,9 +51,5 @@ void i2c1_stop_condition()
   
 }
 
-void i2c1_dma_enable(void)
-{
-  
-  I2C1->CR2 |= I2C_CR2_DMAEN; 
-}
+
 
