@@ -1,7 +1,6 @@
 #include "../Inc/main.h"
 
 
-volatile uint8_t ssd1306_frame_buffer[FRAME_BUFFER_SIZE];
 
 
 int main(void)
