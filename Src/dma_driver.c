@@ -29,6 +29,8 @@ void dma_channel6_init(void)
   /*INTERRUPTS ENABLE*/
   DMA1_Channel6->CCR |= DMA_CCR_TEIE | DMA_CCR_TCIE;
   
+
+  NVIC_SetPriority(DMA1_Channel6_IRQn, 1);
   NVIC_EnableIRQ(DMA1_Channel6_IRQn);
 }
 
