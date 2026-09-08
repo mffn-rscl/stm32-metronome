@@ -47,6 +47,9 @@ C_SRC    = $(SRC_DIR)/main.c
 C_SRC		+= $(SRC_DIR)/i2c_driver.c
 C_SRC		+= $(SRC_DIR)/rcc_conf.c
 C_SRC		+= $(SRC_DIR)/ssd1306.c
+C_SRC		+= $(SRC_DIR)/dma_driver.c
+C_SRC		+= $(SRC_DIR)/font_configuration.c
+C_SRC		+= $(SRC_DIR)/tim2_bpm_clock_control.c
 
 
 OBJS  = $(AS_SRC:$(SRC_DIR)/%.S=$(BUILD_DIR)/%.o)
