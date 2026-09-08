@@ -1,6 +1,9 @@
 #ifndef TIM2_BPM_CLOCK_CONTROL 
 #define TIM2_BPM_CLOCK_CONTROL
 
+#include <stdint.h>
+#include "../CMSIS/Device/stm32f103xb.h"
+
 #define TIM2_PSC_DIVIDER 7200U
 #define TIM2_TICK_PER_SEC 600000U
 
