@@ -1,6 +1,7 @@
 #ifndef I2C1_DRIVER_H
 #define I2C1_DRIVER_H
 
+#include "../CMSIS/Device/stm32f103xb.h"
 #include <stdint.h>
 #define GPIOB_I2C1_MASK 0xFU
 #define I2C1_APB1_FREQUENCY 36U

@@ -1,7 +1,7 @@
 #include "../Inc/tim2_bpm_clock_control.h"
+#include "../Inc/ssd1306.h"
 
-volatile static uint8_t current_bpm = 60; 
-
+volatile  uint8_t current_bpm = 60; 
 void tim2_init(void)
 {
     RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
@@ -26,9 +26,9 @@ void tim2_init(void)
 void button_regulation_init(void)
 {
   RCC->APB2ENR |= RCC_APB2ENR_IOPAEN | RCC_APB2ENR_AFIOEN;
+  GPIOA->CRH &= ~(0xFFU);
   
-  GPIOA->CRH &= ~(GPIO_CRH_CNF9 | GPIO_CRH_CNF8);
-  /*enabling the buttons*/
+/*enabling the buttons*/
   GPIOA->CRH |= GPIOA_CRH_BUTTON_CONFIGURATION;
   GPIOA->ODR |= EXTI_PA8_PIN | EXTI_PA9_PIN;
 
@@ -54,7 +54,7 @@ void EXTI9_5_IRQ_handler(void)
      }
 
   }
-  else if(EXTI->PR & EXTI_PA9_PIN)
+  if(EXTI->PR & EXTI_PA9_PIN)
   {
     EXTI->PR = EXTI_PA9_PIN;
      if(current_bpm - 1 >= MIN_BPM_VALUE)
@@ -63,6 +63,8 @@ void EXTI9_5_IRQ_handler(void)
      }
 
   }
+  set_current_bpm(current_bpm);
+  ssd1306_update_display();
   TIM2->ARR = ((TIM2_TICK_PER_SEC + (current_bpm / 2)) / current_bpm) - 1;
 }
 

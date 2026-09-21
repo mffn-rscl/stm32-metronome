@@ -1,15 +1,25 @@
 #ifndef DEVICE_DRIVER_SSD1306
 #define DEVICE_DRIVER_SSD1306
 
+#include <string.h>
 #include <stdint.h>
 #include "../CMSIS/Device/stm32f103xb.h"
 
 #define SSD1306_ADDR 0x3CU
 
+/*FONT CONFIGURATION*/
+#define SSD1306_PAGE_VALUE 3
+#define SSD1306_COL_VALUE 32
+#define DIGITS_QUANTITY 10
+#define BITS_PER_ONE_SYMBOL 8
+#define SYMBOLS_QUANTITY 5
+
+
+
 
 /*1 kb size for data frame buffer*/
 #define FRAME_BUFFER_SIZE 1024
-extern volatile uint8_t ssd1306_frame_buffer[FRAME_BUFFER_SIZE]; 
+ extern volatile uint8_t ssd1306_frame_buffer[FRAME_BUFFER_SIZE]; 
 
 
 /*SSD1306 Control bytes*/
@@ -79,6 +89,14 @@ void ssd1306_init(void);
 void ssd1306_set_resolution(uint8_t start_x, uint8_t end_x, uint8_t start_y, uint8_t end_y);
 
 void ssd1306_update_display(void);
+
+
+void set_current_bpm(uint8_t bpm_val);
+
+
+void draw_bpm_prefix(void);
+
+
 
 
 #endif /* DEVICE_DRIVER_SSD1306 */

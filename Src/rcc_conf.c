@@ -1,6 +1,5 @@
 #include "../Inc/rcc_conf.h"
 
-#include "../CMSIS/Device/stm32f103xb.h"
 
 void clock_init72mhz(void)
 {

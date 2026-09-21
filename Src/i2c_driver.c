@@ -1,6 +1,5 @@
 #include "../Inc/i2c_driver.h"
 
-#include "../CMSIS/Device/stm32f103xb.h"
 void i2c1_init()
 {
   RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
@@ -31,8 +30,14 @@ void i2c1_start()
 void i2c1_slave_adress(uint8_t addr)
 {
   I2C1->DR = (addr << 1);
-  while(!(I2C1->SR1 & I2C_SR1_ADDR));
+  while (!(I2C1->SR1 & (I2C_SR1_ADDR | I2C_SR1_AF)));
 
+  if (I2C1->SR1 & I2C_SR1_AF)
+  {
+      I2C1->SR1 &= ~I2C_SR1_AF;   
+      I2C1->CR1 |= I2C_CR1_STOP;  
+      return;
+  }
   (void)I2C1->SR1;
   (void)I2C1->SR2;
 }
@@ -46,8 +51,14 @@ void i2c1_data(uint8_t data)
 
 void i2c1_stop_condition()
 {
-  while(!(I2C1->SR1 & I2C_SR1_BTF));
-  I2C1->CR1 |= I2C_CR1_STOP;
+  while (!(I2C1->SR1 & (I2C_SR1_BTF | I2C_SR1_AF)));
+    
+    I2C1->CR1 |= I2C_CR1_STOP;
+    
+    if (I2C1->SR1 & I2C_SR1_AF) 
+    {
+        I2C1->SR1 &= ~I2C_SR1_AF;   
+    }
   
 }
 

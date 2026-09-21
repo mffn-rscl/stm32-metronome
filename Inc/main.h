@@ -8,5 +8,6 @@
 #include "../Inc/rcc_conf.h"
 #include "../Inc/ssd1306.h"
 #include "../Inc/dma_driver.h"
+#include "../Inc/tim2_bpm_clock_control.h"
 
 #endif
