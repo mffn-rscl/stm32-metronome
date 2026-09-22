@@ -9,12 +9,15 @@ void tim2_init(void)
     TIM2->PSC = TIM2_PSC_DIVIDER - 1;
 
     TIM2->ARR = ((TIM2_TICK_PER_SEC + (current_bpm / 2)) / current_bpm) - 1;
-
+    
+    TIM2->CCMR1 &= ~TIM_CCMR1_OC2M;
+    TIM2->CCR2 = BUZZER_CLICK_DURATION_MS;
+    
     TIM2->EGR |= TIM_EGR_UG;
 
     TIM2->CR1 |= TIM_CR1_ARPE;
-
-    TIM2->DIER |= TIM_DIER_UIE;
+    /*Interrupts for  CCR2 and ARR*/
+    TIM2->DIER |= TIM_DIER_UIE | TIM_DIER_CC2IE;
 
     NVIC_SetPriority(TIM2_IRQn, 0);
     NVIC_EnableIRQ(TIM2_IRQn);
@@ -73,8 +76,14 @@ void TIM2_IRQ_handler(void)
 {
     if (TIM2->SR & TIM_SR_UIF)
     {
-        TIM2->SR &= ~TIM_SR_UIF;
+      TIM2->SR &= ~TIM_SR_UIF;
+      /*start pwm*/
+       TIM3->CCER |= TIM_CCER_CC1E;
+    }
 
-        //pwm start/ends here
+    if(TIM2->SR & TIM_SR_CC2IF)
+    {
+      TIM2->SR &= ~TIM_SR_CC2IF;
+      TIM3->CCER &= ~TIM_CCER_CC1E; 
     }
 }

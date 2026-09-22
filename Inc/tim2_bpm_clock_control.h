@@ -12,9 +12,13 @@
 #define EXTI_PA8_PIN   (0x1U << 8)
 #define EXTI_PA9_PIN   (0x1U << 9)
 
+
+
+#define BUZZER_CLICK_DURATION_MS   20U
+
+
 #define MAX_BPM_VALUE 250U
 #define MIN_BPM_VALUE 30U
-
 extern volatile  uint8_t current_bpm; 
 void tim2_init(void);
 

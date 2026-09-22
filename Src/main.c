@@ -12,7 +12,7 @@ int main(void)
 
   tim2_init();
   button_regulation_init();
-  
+  tim3_pwm_init();
   /*DEBUG*/
 
   draw_bpm_prefix();
