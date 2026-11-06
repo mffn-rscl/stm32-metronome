@@ -11,4 +11,5 @@
 #include "../Inc/tim2_bpm_clock_control.h"
 
 #include "../Inc/pwm_buzzer_driver.h"
+#include "../Inc/IWDG.h"
 #endif
