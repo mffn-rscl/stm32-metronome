@@ -10,6 +10,9 @@
 #include "../Inc/dma_driver.h"
 #include "../Inc/tim2_bpm_clock_control.h"
 
+#include "../Inc/timeout_handler.h"
 #include "../Inc/pwm_buzzer_driver.h"
 #include "../Inc/IWDG.h"
+
+#define CPU_FREQ_HZ 72000U
 #endif
