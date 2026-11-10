@@ -23,14 +23,30 @@ void i2c1_init()
 void i2c1_start()
 {
   I2C1->CR1 |=I2C_CR1_START;
-  while (!(I2C1->SR1 & I2C_SR1_SB));
+ 
+  timeout_sleep(
+      system_wait_for_flag(
+        &I2C1->SR1, I2C_SR1_SB, 
+        I2C1_EXPECTED_READY_VAL, I2C1_TIMEOUT_MS
+      )
+  );
+
+ // while (!(I2C1->SR1 & I2C_SR1_SB));
 }
 
 
 void i2c1_slave_adress(uint8_t addr)
 {
   I2C1->DR = (addr << 1);
-  while (!(I2C1->SR1 & (I2C_SR1_ADDR | I2C_SR1_AF)));
+   timeout_sleep(
+      system_wait_for_flag(
+        &I2C1->SR1, (I2C_SR1_ADDR | I2C_SR1_AF), 
+        I2C1_EXPECTED_READY_VAL, I2C1_TIMEOUT_MS
+      )
+  );
+
+
+  //while (!(I2C1->SR1 & (I2C_SR1_ADDR | I2C_SR1_AF)));
 
   if (I2C1->SR1 & I2C_SR1_AF)
   {
@@ -46,12 +62,27 @@ void i2c1_slave_adress(uint8_t addr)
 void i2c1_data(uint8_t data)
 {
   I2C1->DR = data;
-  while(!(I2C1->SR1 & I2C_SR1_TXE));
+  timeout_sleep(
+      system_wait_for_flag(
+        &I2C1->SR1, I2C_SR1_TXE, 
+        I2C1_EXPECTED_READY_VAL, I2C1_TIMEOUT_MS
+      )
+  );
+
+  // while(!(I2C1->SR1 & I2C_SR1_TXE));
 }
 
 void i2c1_stop_condition()
 {
-  while (!(I2C1->SR1 & (I2C_SR1_BTF | I2C_SR1_AF)));
+
+    timeout_sleep(
+      system_wait_for_flag(
+        &I2C1->SR1, (I2C_SR1_BTF | I2C_SR1_AF), 
+        I2C1_EXPECTED_READY_VAL, I2C1_TIMEOUT_MS
+      )
+  );
+
+ // while (!(I2C1->SR1 & (I2C_SR1_BTF | I2C_SR1_AF)));
     
     I2C1->CR1 |= I2C_CR1_STOP;
     

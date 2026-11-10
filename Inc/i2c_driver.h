@@ -2,13 +2,15 @@
 #define I2C1_DRIVER_H
 
 #include "../CMSIS/Device/stm32f103xb.h"
+#include "../Inc/timeout_handler.h"
 #include <stdint.h>
 #define GPIOB_I2C1_MASK 0xFU
 #define I2C1_APB1_FREQUENCY 36U
 #define I2C1_APB1_FREQUENCY_DIVIDER 180U
 #define I2C1_TRISE_VAL 37U 
 
-
+#define I2C1_TIMEOUT_MS     40U
+#define I2C1_EXPECTED_READY_VAL 1U
 void i2c1_init(void);
 
 void i2c1_start(void);

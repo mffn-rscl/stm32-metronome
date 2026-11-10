@@ -3,6 +3,8 @@
 
 #include "../CMSIS/Device/stm32f103xb.h"
 
+#include "../Inc/timeout_handler.h"
+
 #define IWDG_LSI_FREQ_HZ  40000U
 
 
@@ -18,6 +20,9 @@
 
 /*IWDG_RLR REGISTER*/
 #define IWDG_RL_VALUE     625U
+
+#define IWDG_EXPECTED_READY_VAL 0U;
+#define IWDG_TIMEOUT_MS  10U 
 
 void IWDG_Init(void);
 void IWDG_Restart(void);
