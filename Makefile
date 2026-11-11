@@ -51,10 +51,12 @@ C_SRC		+= $(SRC_DIR)/dma_driver.c
 C_SRC		+= $(SRC_DIR)/tim2_bpm_clock_control.c
 C_SRC		+= $(SRC_DIR)/pwm_buzzer_driver.c
 C_SRC		+= $(SRC_DIR)/IWDG.c
+C_SRC		+= $(SRC_DIR)/timeout_handler.c
 
 
-OBJS  = $(AS_SRC:$(SRC_DIR)/%.S=$(BUILD_DIR)/%.o)
-OBJS += $(C_SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
+AS_OBJS  = $(addprefix $(BUILD_DIR)/,$(notdir $(AS_SRC:.S=.o)))
+C_OBJS   = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SRC:.c=.o)))
+OBJS     = $(AS_OBJS) $(C_OBJS)
 
 ELF = $(BUILD_DIR)/$(TARGET).elf
 BIN = $(BUILD_DIR)/$(TARGET).bin
@@ -66,7 +68,7 @@ all: $(BIN)
 $(BUILD_DIR):
 	mkdir -p $@
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.S | $(BUILD_DIR)
+$(BUILD_DIR)/%.o: $(STARTUP_DIR)/%.S | $(BUILD_DIR)
 	$(CC) -x assembler-with-cpp $(ASFLAGS) $< -o $@
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
