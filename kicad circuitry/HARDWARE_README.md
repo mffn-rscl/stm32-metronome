@@ -1,6 +1,6 @@
 # STM32F103 Metronome — Hardware & Schematic Documentation
 
-![Schematic Diagram](pics/photo_2026-11-08_20-55-19.jpg)
+![Schematic Diagram](../pics/photo_2026-11-08_20-55-19.jpg)
 
 *Repository asset: `pics/photo_2026-11-08_20-55-19.jpg` (board photo; no exported schematic image is present). Schematic source: `kicad circuitry/stm32f1xx.kicad_sch`.*
 
